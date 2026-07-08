@@ -1,0 +1,88 @@
+const Application = require("../models/Application");
+const Job = require("../models/Job");
+
+// ======================
+// Apply for Job
+// ======================
+const applyJob = async (req, res) => {
+    try {
+
+        const { jobId } = req.params;
+
+        // Check if job exists
+        const job = await Job.findById(jobId);
+
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: "Job not found"
+            });
+        }
+
+        // Check if already applied
+        const existingApplication = await Application.findOne({
+            student: req.user.id,
+            job: jobId
+        });
+
+        if (existingApplication) {
+            return res.status(400).json({
+                success: false,
+                message: "You have already applied for this job"
+            });
+        }
+
+        // Create application
+        const application = await Application.create({
+            student: req.user.id,
+            job: jobId
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "Application submitted successfully",
+            application
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
+// ======================
+// My Applications
+// ======================
+const getMyApplications = async (req, res) => {
+    try {
+
+        const applications = await Application.find({
+            student: req.user.id
+        })
+        .populate("job")
+        .populate("student", "name email");
+
+        res.status(200).json({
+            success: true,
+            count: applications.length,
+            applications
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
+module.exports = {
+    applyJob,
+    getMyApplications
+};

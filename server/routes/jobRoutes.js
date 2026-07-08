@@ -8,17 +8,22 @@ const {
     getAllJobs,
     getJobById,
     updateJob,
-    deleteJob
+    deleteJob,
+    getMyJobs
 } = require("../controllers/jobController");
 
 console.log("deleteJob =", deleteJob);
-
-// Public Routes
-router.get("/", getAllJobs);
-router.get("/:id", getJobById);
+console.log("getMyJobs =", getMyJobs);
 
 // Protected Routes
 router.post("/create", protect, createJob);
+
+// Public Routes
+router.get("/", getAllJobs);
+router.get("/my/jobs", protect, getMyJobs);
+router.get("/:id", getJobById);
+
+
 router.put("/:id", protect, updateJob);
 router.delete("/:id", protect, deleteJob);
 

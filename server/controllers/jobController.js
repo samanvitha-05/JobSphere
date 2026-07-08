@@ -175,11 +175,47 @@ const deleteJob = async (req, res) => {
     }
 };
 
+// ======================
+// Get My Posted Jobs
+// ======================
+const getMyJobs = async (req, res) => {
+    try {
+
+        const jobs = await Job.find({
+            recruiter: req.user.id
+        });
+
+        res.status(200).json({
+            success: true,
+            count: jobs.length,
+            jobs
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
+console.log("Inside jobController:");
+console.log({
+    createJob,
+    getAllJobs,
+    getJobById,
+    updateJob,
+    deleteJob,
+    getMyJobs
+});
 
 module.exports = {
     createJob,
     getAllJobs,
     getJobById,
     updateJob,
-    deleteJob
+    deleteJob,
+    getMyJobs
 };
