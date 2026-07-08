@@ -82,7 +82,36 @@ const getMyApplications = async (req, res) => {
     }
 };
 
+// ======================
+// Get Applicants for a Job
+// ======================
+const getApplicantsForJob = async (req, res) => {
+    try {
+
+        const applications = await Application.find({
+            job: req.params.jobId
+        })
+        .populate("student", "name email")
+        .populate("job", "title company");
+
+        res.status(200).json({
+            success: true,
+            count: applications.length,
+            applications
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
 module.exports = {
     applyJob,
-    getMyApplications
+    getMyApplications,
+    getApplicantsForJob
 };
