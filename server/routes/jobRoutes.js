@@ -6,14 +6,21 @@ const protect = require("../middleware/authMiddleware");
 const {
     createJob,
     getAllJobs,
-    getJobById
+    getJobById,
+    updateJob,
+    deleteJob
 } = require("../controllers/jobController");
 
-// Get all jobs
+console.log("deleteJob =", deleteJob);
+
+// Public Routes
 router.get("/", getAllJobs);
 router.get("/:id", getJobById);
 
-// Create job
+// Protected Routes
 router.post("/create", protect, createJob);
+router.put("/:id", protect, updateJob);
+router.delete("/:id", protect, deleteJob);
 
+console.log("✅ PUT Route Registered");
 module.exports = router;

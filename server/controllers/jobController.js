@@ -91,9 +91,95 @@ const getJobById = async (req, res) => {
         });
     }
 };
+// Update Job
+const updateJob = async (req, res) => {
+    try {
+
+        const job = await Job.findById(req.params.id);
+
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: "Job not found"
+            });
+        }
+
+        // Only recruiter who created the job can update it
+        if (job.recruiter.toString() !== req.user.id) {
+            return res.status(403).json({
+                success: false,
+                message: "You are not authorized to update this job"
+            });
+        }
+
+        const updatedJob = await Job.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Job updated successfully",
+            job: updatedJob
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
+// Delete Job
+const deleteJob = async (req, res) => {
+    try {
+
+        const job = await Job.findById(req.params.id);
+
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: "Job not found"
+            });
+        }
+
+        // Only recruiter who created the job can delete it
+        if (job.recruiter.toString() !== req.user.id) {
+            return res.status(403).json({
+                success: false,
+                message: "You are not authorized to delete this job"
+            });
+        }
+
+        await Job.findByIdAndDelete(req.params.id);
+
+        res.status(200).json({
+            success: true,
+            message: "Job deleted successfully"
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
 
 module.exports = {
     createJob,
     getAllJobs,
-    getJobById
+    getJobById,
+    updateJob,
+    deleteJob
 };
