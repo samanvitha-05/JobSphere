@@ -156,9 +156,54 @@ const updateApplicationStatus = async (req, res) => {
 
 };
 
+// ======================
+// Upload Resume
+// ======================
+const uploadResume = async (req, res) => {
+
+    try {
+
+        const application = await Application.findById(req.params.applicationId);
+
+        if (!application) {
+            return res.status(404).json({
+                success: false,
+                message: "Application not found"
+            });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please upload a PDF resume"
+            });
+        }
+
+        application.resume = req.file.path;
+
+        await application.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Resume uploaded successfully",
+            resume: req.file.path
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};
+
 module.exports = {
     applyJob,
     getMyApplications,
     getApplicantsForJob,
-    updateApplicationStatus
+    updateApplicationStatus,
+    uploadResume
 };
