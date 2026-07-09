@@ -110,8 +110,55 @@ const getApplicantsForJob = async (req, res) => {
     }
 };
 
+// ======================
+// Update Application Status
+// ======================
+const updateApplicationStatus = async (req, res) => {
+    console.log("✅ updateApplicationStatus called");
+
+    try {
+        
+        const { status } = req.body;
+
+        const application = await Application.findById(req.params.applicationId);
+
+        if (!application) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Application not found"
+            });
+
+        }
+
+        application.status = status;
+
+        await application.save();
+
+        res.status(200).json({
+
+            success: true,
+            message: "Application status updated successfully",
+            application
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+            message: error.message
+
+        });
+
+    }
+
+};
+
 module.exports = {
     applyJob,
     getMyApplications,
-    getApplicantsForJob
+    getApplicantsForJob,
+    updateApplicationStatus
 };
