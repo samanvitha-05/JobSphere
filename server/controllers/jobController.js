@@ -64,6 +64,71 @@ const getAllJobs = async (req, res) => {
 };
 
 // ======================
+// Search Jobs
+// ======================
+const searchJobs = async (req, res) => {
+    try {
+
+        const keyword = req.query.keyword || "";
+
+        const jobs = await Job.find({
+            $or: [
+                { title: { $regex: keyword, $options: "i" } },
+                { company: { $regex: keyword, $options: "i" } },
+                { location: { $regex: keyword, $options: "i" } }
+            ]
+        }).populate("recruiter", "name email");
+
+        res.status(200).json({
+            success: true,
+            count: jobs.length,
+            jobs
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
+// ======================
+// Filter Jobs
+// ======================
+const filterJobs = async (req, res) => {
+    try {
+
+        const { location, jobType, experience } = req.query;
+
+        let filter = {};
+
+        if (location) filter.location = location;
+        if (jobType) filter.jobType = jobType;
+        if (experience) filter.experience = experience;
+
+        const jobs = await Job.find(filter)
+            .populate("recruiter", "name email");
+
+        res.status(200).json({
+            success: true,
+            count: jobs.length,
+            jobs
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
+// ======================
 // Get Job By ID
 // ======================
 const getJobById = async (req, res) => {
@@ -205,6 +270,8 @@ console.log("Inside jobController:");
 console.log({
     createJob,
     getAllJobs,
+    searchJobs,
+    filterJobs,
     getJobById,
     updateJob,
     deleteJob,
@@ -214,8 +281,10 @@ console.log({
 module.exports = {
     createJob,
     getAllJobs,
+    searchJobs,
+    filterJobs,
     getJobById,
     updateJob,
     deleteJob,
-    getMyJobs
+    getMyJobs           
 };
