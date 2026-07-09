@@ -6,6 +6,7 @@ const testRoutes = require("./routes/testRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
 const path = require("path");
+const savedJobRoutes = require("./routes/savedJobRoutes");
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use("/api/test", testRoutes);
 console.log("Registering job routes...");
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/saved-jobs", savedJobRoutes);
 
 // Start Server
 app.listen(PORT, () => {
