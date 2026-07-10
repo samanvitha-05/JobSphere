@@ -9,6 +9,7 @@ const path = require("path");
 const savedJobRoutes = require("./routes/savedJobRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const companyRoutes = require("./routes/companyRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/saved-jobs", savedJobRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/companies", companyRoutes);
+app.use("/api/profile", profileRoutes);
 
 // Start Server
 app.listen(PORT, () => {
