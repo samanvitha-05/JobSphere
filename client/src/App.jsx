@@ -11,23 +11,88 @@ import RecruiterDashboard from "./pages/RecruiterDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/jobs/:id" element={<JobDetails />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/student/dashboard" element={<StudentDashboard />} />
-        <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
+
+    return (
+
+        <BrowserRouter>
+
+            <Routes>
+
+                <Route
+                    path="/"
+                    element={<Home />}
+                />
+
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
+
+                <Route
+                    path="/register"
+                    element={<Register />}
+                />
+
+                <Route
+                    path="/jobs"
+                    element={<Jobs />}
+                />
+
+                <Route
+                    path="/jobs/:id"
+                    element={<JobDetails />}
+                />
+
+                <Route
+                    path="/profile"
+                    element={
+                        <ProtectedRoute>
+                            <Profile />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/student/dashboard"
+                    element={
+                        <ProtectedRoute role="student">
+                            <StudentDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/recruiter/dashboard"
+                    element={
+                        <ProtectedRoute role="recruiter">
+                            <RecruiterDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/dashboard"
+                    element={
+                        <ProtectedRoute role="admin">
+                            <AdminDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="*"
+                    element={<NotFound />}
+                />
+
+            </Routes>
+
+        </BrowserRouter>
+
+    );
+
 }
 
 export default App;
