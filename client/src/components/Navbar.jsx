@@ -1,59 +1,96 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
 
-const Navbar = () => {
+import { AuthContext } from "../context/AuthContext";
+
+const NavigationBar = () => {
+
+    const { user, logout } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+
+        logout();
+
+        navigate("/login");
+
+    };
+
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div className="container">
 
-                <Link className="navbar-brand fw-bold" to="/">
+        <Navbar bg="dark" variant="dark" expand="lg">
+
+            <Container>
+
+                <Navbar.Brand as={Link} to="/">
                     JobSphere
-                </Link>
+                </Navbar.Brand>
 
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+                <Navbar.Toggle />
 
-                <div
-                    className="collapse navbar-collapse"
-                    id="navbarNav"
-                >
-                    <ul className="navbar-nav ms-auto">
+                <Navbar.Collapse>
 
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/">
-                                Home
-                            </Link>
-                        </li>
+                    <Nav className="me-auto">
 
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/jobs">
-                                Jobs
-                            </Link>
-                        </li>
+                        <Nav.Link as={Link} to="/">
+                            Home
+                        </Nav.Link>
 
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/login">
-                                Login
-                            </Link>
-                        </li>
+                        <Nav.Link as={Link} to="/jobs">
+                            Jobs
+                        </Nav.Link>
 
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/register">
-                                Register
-                            </Link>
-                        </li>
+                    </Nav>
 
-                    </ul>
-                </div>
+                    <Nav>
 
-            </div>
-        </nav>
+                        {!user ? (
+
+                            <>
+
+                                <Nav.Link as={Link} to="/login">
+                                    Login
+                                </Nav.Link>
+
+                                <Nav.Link as={Link} to="/register">
+                                    Register
+                                </Nav.Link>
+
+                            </>
+
+                        ) : (
+
+                            <>
+
+                                <Navbar.Text className="me-3">
+
+                                    Welcome, {user.name}
+
+                                </Navbar.Text>
+
+                                <Button
+                                    variant="outline-light"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                </Button>
+
+                            </>
+
+                        )}
+
+                    </Nav>
+
+                </Navbar.Collapse>
+
+            </Container>
+
+        </Navbar>
+
     );
+
 };
 
-export default Navbar;
+export default NavigationBar;
