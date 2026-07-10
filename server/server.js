@@ -10,6 +10,7 @@ const savedJobRoutes = require("./routes/savedJobRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use("/api/saved-jobs", savedJobRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // Start Server
 app.listen(PORT, () => {
