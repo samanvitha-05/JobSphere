@@ -1,5 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
+
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const testRoutes = require("./routes/testRoutes");
@@ -21,6 +23,7 @@ connectDB();
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
