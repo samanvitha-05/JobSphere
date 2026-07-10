@@ -34,10 +34,6 @@ const userSchema = new mongoose.Schema(
         default: ""
     },
 
-    skills: [{
-        type: String
-    }],
-    
     profilePic: {
         type: String,
         default: ""
