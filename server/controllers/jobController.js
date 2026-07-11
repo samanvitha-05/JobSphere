@@ -47,19 +47,46 @@ const createJob = async (req, res) => {
 // ======================
 const getAllJobs = async (req, res) => {
     try {
+
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 5;
-        
         const skip = (page - 1) * limit;
 
         const sortBy = req.query.sort || "-createdAt";
 
-        const jobs = await Job.find()
-        .populate("recruiter", "name email")
-        .sort(sortBy)
-        .skip(skip)
-        .limit(limit);
-        const totalJobs = await Job.countDocuments();
+        const keyword = req.query.keyword || "";
+        const location = req.query.location || "";
+        const jobType = req.query.jobType || "";
+
+        // Build filter object
+        const filter = {};
+
+        if (keyword) {
+            filter.$or = [
+                { title: { $regex: keyword, $options: "i" } },
+                { company: { $regex: keyword, $options: "i" } },
+                { description: { $regex: keyword, $options: "i" } }
+            ];
+        }
+
+        if (location) {
+            filter.location = {
+                $regex: location,
+                $options: "i"
+            };
+        }
+
+        if (jobType) {
+            filter.jobType = jobType;
+        }
+
+        const jobs = await Job.find(filter)
+            .populate("recruiter", "name email")
+            .sort(sortBy)
+            .skip(skip)
+            .limit(limit);
+
+        const totalJobs = await Job.countDocuments(filter);
 
         res.status(200).json({
             success: true,
@@ -71,10 +98,12 @@ const getAllJobs = async (req, res) => {
         });
 
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: error.message
         });
+
     }
 };
 
