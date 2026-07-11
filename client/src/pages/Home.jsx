@@ -1,120 +1,195 @@
 import MainLayout from "../layouts/MainLayout";
 import { Link } from "react-router-dom";
 import hero from "../assets/hero.png";
+import "./Home.css";
 
 const Home = () => {
+
     return (
+
         <MainLayout>
 
             {/* Hero Section */}
-            <div className="py-5 text-center">
 
-                <h1 className="display-3 fw-bold">
-                    Find Your Dream Job
-                </h1>
+            <section className="hero-section">
 
-                <p className="lead mt-3">
-                    Search thousands of jobs from top companies across India.
-                </p>
+                <div className="row align-items-center">
 
-                <div className="mt-4">
+                    <div className="col-lg-6">
 
-                    <Link
-                        to="/jobs"
-                        className="btn btn-primary btn-lg me-3"
-                    >
-                        Browse Jobs
-                    </Link>
+                        <h1 className="hero-title">
+                            Find Your Dream Job Today
+                        </h1>
 
-                    <Link
-                        to="/register"
-                        className="btn btn-outline-dark btn-lg"
-                    >
-                        Get Started
-                    </Link>
+                        <p className="hero-subtitle">
+                            JobSphere helps students connect with top companies,
+                            discover exciting opportunities, and build successful careers.
+                        </p>
+
+                        <Link
+                            to="/jobs"
+                            className="btn btn-light btn-lg me-3"
+                        >
+                            Browse Jobs
+                        </Link>
+
+                        <Link
+                            to="/register"
+                            className="btn btn-outline-light btn-lg"
+                        >
+                            Get Started
+                        </Link>
+
+                    </div>
+
+                    <div className="col-lg-6 text-center">
+
+                        <img
+                            src={hero}
+                            alt="Job Portal"
+                            className="hero-image img-fluid"
+                        />
+
+                    </div>
 
                 </div>
 
-                <div className="text-center mt-5">
+            </section>
 
-                    <img
-                        src={hero}
-                        alt="Job Portal"
-                        className="img-fluid"
-                        style={{ maxWidth: "650px" }}
-                    />
+            {/* Features */}
 
-                </div>
+            <section className="container py-5">
 
-            </div>
+                <div className="text-center mb-5">
 
-            {/* Features Section */}
-            <div className="row text-center mt-5 mb-5">
+                    <h2>Why Choose JobSphere?</h2>
 
-                <div className="col-md-4">
-
-                    <h3>💼 Thousands of Jobs</h3>
-
-                    <p>
-                        Explore thousands of jobs from top companies across India.
+                    <p className="text-muted">
+                        Everything you need to launch your career.
                     </p>
 
                 </div>
 
-                <div className="col-md-4">
+                <div className="row">
 
-                    <h3>⚡ Easy Apply</h3>
+                    <div className="col-md-4 mb-4">
 
-                    <p>
-                        Apply for your dream job with just one click.
-                    </p>
+                        <div className="card feature-card shadow h-100">
+
+                            <div className="card-body text-center">
+
+                                <h1>💼</h1>
+
+                                <h4>Thousands of Jobs</h4>
+
+                                <p>
+                                    Explore job opportunities from leading companies
+                                    across India.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className="col-md-4 mb-4">
+
+                        <div className="card feature-card shadow h-100">
+
+                            <div className="card-body text-center">
+
+                                <h1>⚡</h1>
+
+                                <h4>Easy Apply</h4>
+
+                                <p>
+                                    Apply for jobs in just one click using your
+                                    JobSphere profile.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className="col-md-4 mb-4">
+
+                        <div className="card feature-card shadow h-100">
+
+                            <div className="card-body text-center">
+
+                                <h1>🚀</h1>
+
+                                <h4>Career Growth</h4>
+
+                                <p>
+                                    Connect with recruiters and grow your career
+                                    with confidence.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-                <div className="col-md-4">
+            </section>
 
-                    <h3>🚀 Career Growth</h3>
+            {/* Statistics */}
 
-                    <p>
-                        Build your career with trusted recruiters and exciting opportunities.
-                    </p>
-
-                </div>
-
-            </div>
-
-            {/* Statistics Section */}
-            <section className="py-5">
+            <section className="container py-5">
 
                 <div className="row text-center">
 
                     <div className="col-md-4 mb-4">
 
-                        <h2 className="text-primary fw-bold">
-                            1000+
-                        </h2>
+                        <div className="card stats-card shadow p-4">
 
-                        <p>Jobs Posted</p>
+                            <h2 className="text-primary fw-bold">
+                                1000+
+                            </h2>
 
-                    </div>
+                            <p className="mb-0">
+                                Jobs Posted
+                            </p>
 
-                    <div className="col-md-4 mb-4">
-
-                        <h2 className="text-success fw-bold">
-                            500+
-                        </h2>
-
-                        <p>Companies</p>
+                        </div>
 
                     </div>
 
                     <div className="col-md-4 mb-4">
 
-                        <h2 className="text-danger fw-bold">
-                            5000+
-                        </h2>
+                        <div className="card stats-card shadow p-4">
 
-                        <p>Students</p>
+                            <h2 className="text-success fw-bold">
+                                500+
+                            </h2>
+
+                            <p className="mb-0">
+                                Companies
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div className="col-md-4 mb-4">
+
+                        <div className="card stats-card shadow p-4">
+
+                            <h2 className="text-danger fw-bold">
+                                5000+
+                            </h2>
+
+                            <p className="mb-0">
+                                Students
+                            </p>
+
+                        </div>
 
                     </div>
 
@@ -123,7 +198,9 @@ const Home = () => {
             </section>
 
         </MainLayout>
+
     );
+
 };
 
 export default Home;
