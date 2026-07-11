@@ -42,6 +42,14 @@ const NavigationBar = () => {
                             Jobs
                         </Nav.Link>
 
+                        <Nav.Link as={Link} to="/saved-jobs">
+                            Saved Jobs
+                        </Nav.Link>
+
+                        <Nav.Link as={Link} to="/my-applications">
+                            My Applications
+                        </Nav.Link>
+
                     </Nav>
 
                     <Nav>
