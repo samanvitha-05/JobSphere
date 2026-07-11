@@ -28,9 +28,9 @@ const NavigationBar = () => {
                     JobSphere
                 </Navbar.Brand>
 
-                <Navbar.Toggle />
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-                <Navbar.Collapse>
+                <Navbar.Collapse id="basic-navbar-nav">
 
                     <Nav className="me-auto">
 
@@ -42,13 +42,41 @@ const NavigationBar = () => {
                             Jobs
                         </Nav.Link>
 
-                        <Nav.Link as={Link} to="/saved-jobs">
-                            Saved Jobs
-                        </Nav.Link>
+                        {user?.role === "student" && (
+                            <>
+                                <Nav.Link as={Link} to="/saved-jobs">
+                                    Saved Jobs
+                                </Nav.Link>
 
-                        <Nav.Link as={Link} to="/my-applications">
-                            My Applications
-                        </Nav.Link>
+                                <Nav.Link as={Link} to="/my-applications">
+                                    My Applications
+                                </Nav.Link>
+                            </>
+                        )}
+
+                        {user?.role === "recruiter" && (
+                            <>
+                                <Nav.Link as={Link} to="/my-posted-jobs">
+                                    My Jobs
+                                </Nav.Link>
+
+                                <Nav.Link as={Link} to="/recruiter/dashboard">
+                                    Recruiter Dashboard
+                                </Nav.Link>
+                            </>
+                        )}
+
+                        {user?.role === "admin" && (
+                            <Nav.Link as={Link} to="/admin/dashboard">
+                                Admin Dashboard
+                            </Nav.Link>
+                        )}
+
+                        {user?.role === "student" && (
+                            <Nav.Link as={Link} to="/student/dashboard">
+                                Student Dashboard
+                            </Nav.Link>
+                        )}
 
                     </Nav>
 
@@ -57,7 +85,6 @@ const NavigationBar = () => {
                         {!user ? (
 
                             <>
-
                                 <Nav.Link as={Link} to="/login">
                                     Login
                                 </Nav.Link>
@@ -65,19 +92,18 @@ const NavigationBar = () => {
                                 <Nav.Link as={Link} to="/register">
                                     Register
                                 </Nav.Link>
-
                             </>
 
                         ) : (
 
                             <>
-
-                                <Nav.Link as={Link} to="/saved-jobs">
-                                Saved Jobs
+                                <Nav.Link as={Link} to="/profile">
+                                    Profile
                                 </Nav.Link>
+
                                 <Navbar.Text className="mx-3">
                                     Welcome, {user.name}
-                                    </Navbar.Text>
+                                </Navbar.Text>
 
                                 <Button
                                     variant="outline-light"
@@ -85,7 +111,6 @@ const NavigationBar = () => {
                                 >
                                     Logout
                                 </Button>
-
                             </>
 
                         )}

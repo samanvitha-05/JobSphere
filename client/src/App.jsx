@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import SavedJobs from "./pages/SavedJobs";
 import MyApplications from "./pages/MyApplications";
+import MyPostedJobs from "./pages/MyPostedJobs";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -98,6 +99,15 @@ function App() {
                 element={
                 <ProtectedRoute>
                   <MyApplications />
+                  </ProtectedRoute>
+                }
+                />
+
+                <Route
+                path="/my-posted-jobs"
+                element={
+                <ProtectedRoute role="recruiter">
+                  <MyPostedJobs />
                   </ProtectedRoute>
                 }
                 />
