@@ -64,11 +64,12 @@ const NavigationBar = () => {
 
                             <>
 
-                                <Navbar.Text className="me-3">
-
+                                <Nav.Link as={Link} to="/saved-jobs">
+                                Saved Jobs
+                                </Nav.Link>
+                                <Navbar.Text className="mx-3">
                                     Welcome, {user.name}
-
-                                </Navbar.Text>
+                                    </Navbar.Text>
 
                                 <Button
                                     variant="outline-light"

@@ -49,6 +49,24 @@ const JobDetails = () => {
 
     };
 
+    const saveJob = async () => {
+
+        try {
+
+            const res = await API.post(`/saved-jobs/${id}`);
+
+            toast.success(res.data.message);
+
+        } catch (error) {
+
+            toast.error(
+                error.response?.data?.message || "Unable to save job"
+            );
+
+        }
+
+    };
+
     if (!job) {
 
         return (
@@ -74,50 +92,24 @@ const JobDetails = () => {
                 <h2>{job.title}</h2>
 
                 <h5 className="text-muted">
-
                     {job.company}
-
                 </h5>
 
                 <hr />
 
-                <p>
+                <p><strong>Location:</strong> {job.location}</p>
 
-                    <strong>Location:</strong> {job.location}
+                <p><strong>Salary:</strong> ₹{job.salary}</p>
 
-                </p>
+                <p><strong>Experience:</strong> {job.experience}</p>
 
-                <p>
+                <p><strong>Job Type:</strong> {job.jobType}</p>
 
-                    <strong>Salary:</strong> ₹{job.salary}
-
-                </p>
-
-                <p>
-
-                    <strong>Experience:</strong> {job.experience}
-
-                </p>
-
-                <p>
-
-                    <strong>Job Type:</strong> {job.jobType}
-
-                </p>
-
-                <p>
-
-                    <strong>Description:</strong>
-
-                </p>
+                <p><strong>Description:</strong></p>
 
                 <p>{job.description}</p>
 
-                <p>
-
-                    <strong>Skills:</strong>
-
-                </p>
+                <p><strong>Skills:</strong></p>
 
                 <ul>
 
@@ -129,12 +121,23 @@ const JobDetails = () => {
 
                 </ul>
 
-                <button
-                    className="btn btn-success mt-3"
-                    onClick={applyJob}
-                >
-                    Apply Now
-                </button>
+                <div className="mt-3">
+
+                    <button
+                        className="btn btn-success me-2"
+                        onClick={applyJob}
+                    >
+                        Apply Now
+                    </button>
+
+                    <button
+                        className="btn btn-warning"
+                        onClick={saveJob}
+                    >
+                        Save Job
+                    </button>
+
+                </div>
 
             </div>
 

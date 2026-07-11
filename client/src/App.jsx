@@ -10,6 +10,7 @@ import StudentDashboard from "./pages/StudentDashboard";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import SavedJobs from "./pages/SavedJobs";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -80,6 +81,15 @@ function App() {
                             <AdminDashboard />
                         </ProtectedRoute>
                     }
+                />
+
+                <Route
+                path="/saved-jobs"
+                element={
+                <ProtectedRoute>
+                  <SavedJobs />
+                  </ProtectedRoute>
+                }
                 />
 
                 <Route
