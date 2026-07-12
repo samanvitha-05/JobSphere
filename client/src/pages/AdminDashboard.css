@@ -1,0 +1,23 @@
+.dashboard-header {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    color: white;
+    border-radius: 18px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    border: none;
+    border-radius: 18px;
+    transition: 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.quick-btn {
+    width: 100%;
+    margin-bottom: 15px;
+}
