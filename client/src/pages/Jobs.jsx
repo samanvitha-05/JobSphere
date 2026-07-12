@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import API from "../services/api";
 
+import Loader from "../components/Loader";
 import "./Jobs.css";
 
 const Jobs = () => {
@@ -36,8 +37,8 @@ const Jobs = () => {
             });
 
             console.log("API Response:", res.data);
-            setJobs(res.data.jobs);
 
+            setJobs(res.data.jobs);
 
         } catch (error) {
 
@@ -155,32 +156,22 @@ const Jobs = () => {
 
             </div>
 
+            {/* Loading */}
+
             {loading ? (
 
-                <div className="text-center">
-
-                    <div
-                        className="spinner-border text-primary"
-                        role="status"
-                    >
-                    </div>
-
-                    <p className="mt-3">
-                        Loading Jobs...
-                    </p>
-
-                </div>
+                <Loader />
 
             ) : jobs.length === 0 ? (
 
                 <div className="text-center py-5">
 
-                    <h2>📭</h2>
+                    <h1>📭</h1>
 
-                    <h4>No Jobs Found</h4>
+                    <h3>No Jobs Found</h3>
 
                     <p className="text-muted">
-                        Try searching with different keywords.
+                        Try searching with different keywords or filters.
                     </p>
 
                 </div>
@@ -230,7 +221,7 @@ const Jobs = () => {
 
                                             <span
                                                 key={index}
-                                                className="badge bg-secondary skill-badge"
+                                                className="badge bg-secondary skill-badge me-2"
                                             >
                                                 {skill}
                                             </span>
