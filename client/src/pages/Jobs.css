@@ -1,0 +1,38 @@
+.job-card {
+    border: none;
+    border-radius: 18px;
+    transition: 0.3s;
+}
+
+.job-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.job-title {
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.job-company {
+    font-size: 18px;
+    color: #555;
+}
+
+.job-info {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.skill-badge {
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.search-box {
+    border-radius: 12px;
+}
+
+.filter-box {
+    border-radius: 12px;
+}
