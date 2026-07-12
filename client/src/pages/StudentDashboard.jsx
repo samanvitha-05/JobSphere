@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import API from "../services/api";
+import { AuthContext } from "../context/AuthContext";
+
+import "./StudentDashboard.css";
 
 const StudentDashboard = () => {
+
+    const { user } = useContext(AuthContext);
 
     const [stats, setStats] = useState({
         applications: 0,
@@ -41,15 +46,29 @@ const StudentDashboard = () => {
 
         <MainLayout>
 
-            <h2 className="mb-4">
-                Student Dashboard
-            </h2>
+            {/* Header */}
+
+            <div className="dashboard-header">
+
+                <h2>
+                    👋 Welcome, {user?.name}
+                </h2>
+
+                <p className="mb-0">
+                    Manage your applications, saved jobs and profile from one place.
+                </p>
+
+            </div>
+
+            {/* Statistics */}
 
             <div className="row">
 
-                <div className="col-md-6 mb-4">
+                <div className="col-md-4 mb-4">
 
-                    <div className="card shadow text-center p-4">
+                    <div className="card stat-card shadow text-center p-4">
+
+                        <h1>📄</h1>
 
                         <h5>Total Applications</h5>
 
@@ -61,9 +80,11 @@ const StudentDashboard = () => {
 
                 </div>
 
-                <div className="col-md-6 mb-4">
+                <div className="col-md-4 mb-4">
 
-                    <div className="card shadow text-center p-4">
+                    <div className="card stat-card shadow text-center p-4">
+
+                        <h1>❤️</h1>
 
                         <h5>Saved Jobs</h5>
 
@@ -75,23 +96,79 @@ const StudentDashboard = () => {
 
                 </div>
 
+                <div className="col-md-4 mb-4">
+
+                    <div className="card stat-card shadow text-center p-4">
+
+                        <h1>💼</h1>
+
+                        <h5>Available Jobs</h5>
+
+                        <h2 className="text-warning">
+                            100+
+                        </h2>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <div className="mt-4">
+            {/* Quick Actions */}
 
-                <Link
-                    to="/my-applications"
-                    className="btn btn-primary me-3"
-                >
-                    My Applications
-                </Link>
+            <div className="card shadow p-4 mt-4">
 
-                <Link
-                    to="/saved-jobs"
-                    className="btn btn-warning"
-                >
-                    Saved Jobs
-                </Link>
+                <h4 className="mb-4">
+                    Quick Actions
+                </h4>
+
+                <div className="row">
+
+                    <div className="col-md-3">
+
+                        <Link
+                            to="/jobs"
+                            className="btn btn-primary quick-btn"
+                        >
+                            Browse Jobs
+                        </Link>
+
+                    </div>
+
+                    <div className="col-md-3">
+
+                        <Link
+                            to="/my-applications"
+                            className="btn btn-success quick-btn"
+                        >
+                            My Applications
+                        </Link>
+
+                    </div>
+
+                    <div className="col-md-3">
+
+                        <Link
+                            to="/saved-jobs"
+                            className="btn btn-warning quick-btn"
+                        >
+                            Saved Jobs
+                        </Link>
+
+                    </div>
+
+                    <div className="col-md-3">
+
+                        <Link
+                            to="/profile"
+                            className="btn btn-dark quick-btn"
+                        >
+                            Edit Profile
+                        </Link>
+
+                    </div>
+
+                </div>
 
             </div>
 
