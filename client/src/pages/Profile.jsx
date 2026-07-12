@@ -4,6 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import MainLayout from "../layouts/MainLayout";
 import API from "../services/api";
 
+import "./Profile.css";
+
 const Profile = () => {
 
     const [profile, setProfile] = useState({
@@ -19,6 +21,7 @@ const Profile = () => {
     }, []);
 
     const fetchProfile = async () => {
+
         try {
 
             const res = await API.get("/profile");
@@ -34,8 +37,11 @@ const Profile = () => {
             });
 
         } catch (error) {
+
             console.log(error);
+
         }
+
     };
 
     const handleChange = (e) => {
@@ -58,6 +64,7 @@ const Profile = () => {
                 skills: profile.skills
                     .split(",")
                     .map(skill => skill.trim())
+                    .filter(skill => skill !== "")
             });
 
             toast.success("Profile Updated Successfully");
@@ -78,90 +85,143 @@ const Profile = () => {
 
             <ToastContainer />
 
-            <div className="container" style={{ maxWidth: "700px" }}>
+            <div className="container" style={{ maxWidth: "850px" }}>
 
-                <div className="card shadow p-4">
+                <div className="profile-header">
 
-                    <h2 className="mb-4">
-                        My Profile
-                    </h2>
+                    <div className="profile-avatar">
 
-                    <form onSubmit={handleSubmit}>
+                        {profile.name
+                            ? profile.name.charAt(0).toUpperCase()
+                            : "U"}
 
-                        <div className="mb-3">
+                    </div>
 
-                            <label>Name</label>
+                    <h2>{profile.name}</h2>
 
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="name"
-                                value={profile.name}
-                                onChange={handleChange}
-                            />
+                    <p className="mb-0">
+                        {profile.email}
+                    </p>
 
-                        </div>
+                </div>
 
-                        <div className="mb-3">
+                <div className="card shadow profile-card">
 
-                            <label>Email</label>
+                    <div className="card-body p-4">
 
-                            <input
-                                className="form-control"
-                                value={profile.email}
-                                disabled
-                            />
+                        <h3 className="mb-4">
+                            Edit Profile
+                        </h3>
 
-                        </div>
+                        <form onSubmit={handleSubmit}>
 
-                        <div className="mb-3">
+                            <div className="mb-3">
 
-                            <label>Phone</label>
+                                <label className="profile-label">
+                                    Name
+                                </label>
 
-                            <input
-                                className="form-control"
-                                name="phone"
-                                value={profile.phone}
-                                onChange={handleChange}
-                            />
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="name"
+                                    value={profile.name}
+                                    onChange={handleChange}
+                                />
 
-                        </div>
+                            </div>
 
-                        <div className="mb-3">
+                            <div className="mb-3">
 
-                            <label>Bio</label>
+                                <label className="profile-label">
+                                    Email
+                                </label>
 
-                            <textarea
-                                className="form-control"
-                                rows="4"
-                                name="bio"
-                                value={profile.bio}
-                                onChange={handleChange}
-                            />
+                                <input
+                                    className="form-control"
+                                    value={profile.email}
+                                    disabled
+                                />
 
-                        </div>
+                            </div>
 
-                        <div className="mb-3">
+                            <div className="mb-3">
 
-                            <label>Skills</label>
+                                <label className="profile-label">
+                                    Phone
+                                </label>
 
-                            <input
-                                className="form-control"
-                                name="skills"
-                                value={profile.skills}
-                                onChange={handleChange}
-                                placeholder="Java, React, Node.js"
-                            />
+                                <input
+                                    className="form-control"
+                                    name="phone"
+                                    value={profile.phone}
+                                    onChange={handleChange}
+                                    placeholder="Enter your phone number"
+                                />
 
-                        </div>
+                            </div>
 
-                        <button
-                            className="btn btn-primary"
-                        >
-                            Update Profile
-                        </button>
+                            <div className="mb-3">
 
-                    </form>
+                                <label className="profile-label">
+                                    Bio
+                                </label>
+
+                                <textarea
+                                    rows="4"
+                                    className="form-control"
+                                    name="bio"
+                                    value={profile.bio}
+                                    onChange={handleChange}
+                                    placeholder="Tell recruiters about yourself"
+                                />
+
+                            </div>
+
+                            <div className="mb-3">
+
+                                <label className="profile-label">
+                                    Skills
+                                </label>
+
+                                <input
+                                    className="form-control"
+                                    name="skills"
+                                    value={profile.skills}
+                                    onChange={handleChange}
+                                    placeholder="Java, React, Node.js"
+                                />
+
+                            </div>
+
+                            <div className="skills-preview">
+
+                                {profile.skills
+                                    .split(",")
+                                    .map(skill => skill.trim())
+                                    .filter(skill => skill !== "")
+                                    .map((skill, index) => (
+
+                                        <span
+                                            key={index}
+                                            className="badge bg-primary"
+                                        >
+                                            {skill}
+                                        </span>
+
+                                    ))}
+
+                            </div>
+
+                            <button
+                                className="btn btn-primary mt-4"
+                            >
+                                Update Profile
+                            </button>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
