@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import API from "../services/api";
+import EmptyState from "../components/EmptyState";
 
 const MyPostedJobs = () => {
 
@@ -44,7 +45,13 @@ const MyPostedJobs = () => {
 
             {jobs.length === 0 ? (
 
-                <h4>No Jobs Posted Yet</h4>
+                <EmptyState
+                    icon="💼"
+                    title="No Jobs Posted"
+                    message="Create your first job posting."
+                    buttonText="Post Job"
+                    buttonLink="/post-job"
+                />
 
             ) : (
 

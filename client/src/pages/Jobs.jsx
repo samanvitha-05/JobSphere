@@ -5,6 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 import API from "../services/api";
 
 import Loader from "../components/Loader";
+import EmptyState from "../components/EmptyState";
 import "./Jobs.css";
 
 const Jobs = () => {
@@ -164,17 +165,13 @@ const Jobs = () => {
 
             ) : jobs.length === 0 ? (
 
-                <div className="text-center py-5">
-
-                    <h1>📭</h1>
-
-                    <h3>No Jobs Found</h3>
-
-                    <p className="text-muted">
-                        Try searching with different keywords or filters.
-                    </p>
-
-                </div>
+                <EmptyState
+                icon="❤️"
+                title="No Saved Jobs"
+                message="Save interesting jobs to view them later."
+                buttonText="Browse Jobs"
+                buttonLink="/jobs"
+                />
 
             ) : (
 

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import API from "../services/api";
+import EmptyState from "../components/EmptyState";
 
 const MyApplications = () => {
 
@@ -38,7 +39,13 @@ const MyApplications = () => {
 
             {applications.length === 0 ? (
 
-                <h4>No Applications Yet</h4>
+                <EmptyState
+                    icon="📄"
+                    title="No Applications Yet"
+                    message="Apply for jobs to track your applications."
+                    buttonText="Browse Jobs"
+                    buttonLink="/jobs"
+                />
 
             ) : (
 
@@ -61,11 +68,10 @@ const MyApplications = () => {
 
                                     <p>📍 {application.job.location}</p>
 
-                                    <p>💰 ₹{application.job.salary}</p>
+                                    <p>💰 ₹ {application.job.salary}</p>
 
                                     <p>
-                                        <strong>Status:</strong>{" "}
-                                        {application.status}
+                                        <strong>Status:</strong> {application.status}
                                     </p>
 
                                     <Link
