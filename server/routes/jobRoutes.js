@@ -38,7 +38,7 @@ router.post("/create", protect, createJob);
 
 // Public Routes
 router.get("/", getAllJobs);
-router.get("/my/jobs", protect, getMyJobs);
+router.get("/my-jobs", protect, getMyJobs);
 router.get("/search", searchJobs);
 router.get("/filter", filterJobs);
 

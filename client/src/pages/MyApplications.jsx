@@ -71,8 +71,32 @@ const MyApplications = () => {
                                     <p>💰 ₹ {application.job.salary}</p>
 
                                     <p>
-                                        <strong>Status:</strong> {application.status}
-                                    </p>
+                                        
+                                        <strong>Status:</strong>{" "}
+                                        
+                                        <span
+                                        
+                                        className={
+    
+                                            application.status === "Accepted"
+                
+                                            ? "badge bg-success"
+                
+                                            : application.status === "Rejected"
+                
+                                            ? "badge bg-danger"
+                
+                                            : "badge bg-warning text-dark"
+
+                                        }
+                                        
+                                        >
+                                            
+                                            {application.status}
+                                            
+                                            </span>
+                                            
+                                            </p>
 
                                     <Link
                                         to={`/jobs/${application.job._id}`}

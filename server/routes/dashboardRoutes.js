@@ -9,4 +9,10 @@ const {
 
 router.get("/", protect, getDashboardStats);
 
+const {
+    recruiterDashboard
+} = require("../controllers/dashboardController");
+
+router.get("/recruiter", protect, recruiterDashboard);
+
 module.exports = router;

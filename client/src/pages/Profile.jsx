@@ -44,6 +44,7 @@ const Profile = () => {
 
     };
 
+    // ✅ This function was missing
     const handleChange = (e) => {
 
         setProfile({
@@ -60,7 +61,9 @@ const Profile = () => {
         try {
 
             await API.put("/profile", {
-                ...profile,
+                name: profile.name,
+                phone: profile.phone,
+                bio: profile.bio,
                 skills: profile.skills
                     .split(",")
                     .map(skill => skill.trim())
@@ -69,10 +72,13 @@ const Profile = () => {
 
             toast.success("Profile Updated Successfully");
 
+            fetchProfile();
+
         } catch (error) {
 
             toast.error(
-                error.response?.data?.message || "Update Failed"
+                error.response?.data?.message ||
+                "Update Failed"
             );
 
         }
@@ -138,6 +144,7 @@ const Profile = () => {
                                 </label>
 
                                 <input
+                                    type="email"
                                     className="form-control"
                                     value={profile.email}
                                     disabled
@@ -152,6 +159,7 @@ const Profile = () => {
                                 </label>
 
                                 <input
+                                    type="text"
                                     className="form-control"
                                     name="phone"
                                     value={profile.phone}
@@ -194,7 +202,7 @@ const Profile = () => {
 
                             </div>
 
-                            <div className="skills-preview">
+                            <div className="skills-preview mb-3">
 
                                 {profile.skills
                                     .split(",")
@@ -204,7 +212,7 @@ const Profile = () => {
 
                                         <span
                                             key={index}
-                                            className="badge bg-primary"
+                                            className="badge bg-primary me-2 mb-2"
                                         >
                                             {skill}
                                         </span>
@@ -214,7 +222,8 @@ const Profile = () => {
                             </div>
 
                             <button
-                                className="btn btn-primary mt-4"
+                                type="submit"
+                                className="btn btn-primary mt-2"
                             >
                                 Update Profile
                             </button>

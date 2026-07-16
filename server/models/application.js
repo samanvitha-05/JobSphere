@@ -16,13 +16,23 @@ const applicationSchema = new mongoose.Schema(
 
     status: {
         type: String,
-        enum: ["Applied", "Reviewed", "Shortlisted", "Rejected"],
+        enum: ["Applied", "Accepted", "Rejected"],
         default: "Applied"
-    }
+    },
+
+    resume: {
+    type: String,
+    default: ""
+},
 
 },
 {
     timestamps: true
 });
+
+console.log(
+    "Application enum:",
+    applicationSchema.path("status").enumValues
+);
 
 module.exports = mongoose.model("Application", applicationSchema);

@@ -12,7 +12,9 @@ const RecruiterDashboard = () => {
     const { user } = useContext(AuthContext);
 
     const [stats, setStats] = useState({
-        jobs: 0
+        jobs: 0,
+        totalApplications: 0,
+        activeJobs: 0
     });
 
     useEffect(() => {
@@ -21,21 +23,18 @@ const RecruiterDashboard = () => {
 
     const fetchStats = async () => {
 
-        try {
+    try {
 
-            const res = await API.get("/jobs/my");
+        const res = await API.get("/dashboard/recruiter");
 
-            setStats({
-                jobs: res.data.jobs.length
-            });
+        setStats(res.data.stats);
 
-        } catch (error) {
+    } catch (error) {
 
-            console.log(error);
+        console.log(error);
 
-        }
-
-    };
+    }
+  };
 
     return (
 
@@ -84,7 +83,8 @@ const RecruiterDashboard = () => {
                         <h5>Total Applications</h5>
 
                         <h2 className="text-primary">
-                            Coming Soon
+                          
+                          {stats.totalApplications}
                         </h2>
 
                     </div>
@@ -100,7 +100,7 @@ const RecruiterDashboard = () => {
                         <h5>Active Jobs</h5>
 
                         <h2 className="text-warning">
-                            {stats.jobs}
+                            {stats.activeJobs}
                         </h2>
 
                     </div>

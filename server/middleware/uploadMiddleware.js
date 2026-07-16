@@ -1,32 +1,20 @@
 const multer = require("multer");
 const path = require("path");
 
-// Storage configuration
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/resumes");
+
+    destination(req, file, cb) {
+        console.log("📁 Destination middleware called");
+        cb(null, "uploads/");
     },
 
-    filename: function (req, file, cb) {
-        const uniqueName = Date.now() + "-" + file.originalname;
-        cb(null, uniqueName);
-    }
-});
-
-// Allow only PDF files
-const fileFilter = (req, file, cb) => {
-
-    if (file.mimetype === "application/pdf") {
-        cb(null, true);
-    } else {
-        cb(new Error("Only PDF files are allowed"), false);
+    filename(req, file, cb) {
+        console.log("📄 File received:", file.originalname);
+        cb(null, Date.now() + path.extname(file.originalname));
     }
 
-};
-
-const upload = multer({
-    storage,
-    fileFilter
 });
+
+const upload = multer({ storage });
 
 module.exports = upload;
