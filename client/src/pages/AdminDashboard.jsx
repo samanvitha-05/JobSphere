@@ -219,7 +219,12 @@ const AdminDashboard = () => {
 
                     {recentJobs.length === 0 ? (
 
-                        <p>No jobs available.</p>
+                        <div className="text-center py-5">
+                            <h3>📭 No Jobs Found</h3>
+                            <p className="text-muted">
+                                There are no jobs available right now.
+                                </p>
+                                </div>
 
                     ) : (
 

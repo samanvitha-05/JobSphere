@@ -13,8 +13,11 @@ const Profile = () => {
         email: "",
         phone: "",
         bio: "",
-        skills: ""
+        skills: "",
+        resume: ""
     });
+
+    const [resume, setResume] = useState(null);
 
     useEffect(() => {
         fetchProfile();
@@ -33,7 +36,8 @@ const Profile = () => {
                 bio: res.data.user.bio || "",
                 skills: res.data.user.skills
                     ? res.data.user.skills.join(", ")
-                    : ""
+                    : "",
+                resume: res.data.user.resume || ""
             });
 
         } catch (error) {
@@ -44,7 +48,6 @@ const Profile = () => {
 
     };
 
-    // ✅ This function was missing
     const handleChange = (e) => {
 
         setProfile({
@@ -60,15 +63,25 @@ const Profile = () => {
 
         try {
 
-            await API.put("/profile", {
-                name: profile.name,
-                phone: profile.phone,
-                bio: profile.bio,
-                skills: profile.skills
-                    .split(",")
-                    .map(skill => skill.trim())
-                    .filter(skill => skill !== "")
-            });
+            const formData = new FormData();
+
+            formData.append("name", profile.name);
+            formData.append("phone", profile.phone);
+            formData.append("bio", profile.bio);
+
+            profile.skills
+                .split(",")
+                .map(skill => skill.trim())
+                .filter(skill => skill !== "")
+                .forEach(skill => formData.append("skills", skill));
+
+            if (resume) {
+
+                formData.append("resume", resume);
+
+            }
+
+            await API.put("/profile", formData);
 
             toast.success("Profile Updated Successfully");
 
@@ -91,7 +104,10 @@ const Profile = () => {
 
             <ToastContainer />
 
-            <div className="container" style={{ maxWidth: "850px" }}>
+            <div
+                className="container"
+                style={{ maxWidth: "850px" }}
+            >
 
                 <div className="profile-header">
 
@@ -220,6 +236,40 @@ const Profile = () => {
                                     ))}
 
                             </div>
+
+                            <div className="mb-3">
+
+                                <label className="profile-label">
+                                    Upload Resume (PDF)
+                                </label>
+
+                                <input
+                                    type="file"
+                                    className="form-control"
+                                    accept=".pdf"
+                                    onChange={(e) =>
+                                        setResume(e.target.files[0])
+                                    }
+                                />
+
+                            </div>
+
+                            {profile.resume && (
+
+                                <div className="mb-3">
+
+                                    <a
+                                        href={`http://localhost:5000${profile.resume}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="btn btn-outline-primary"
+                                    >
+                                        📄 View Current Resume
+                                    </a>
+
+                                </div>
+
+                            )}
 
                             <button
                                 type="submit"

@@ -47,6 +47,10 @@ const MyPostedJobs = () => {
 
         try {
 
+            const confirmDelete = window.confirm(
+                "Are you sure you want to delete this job?"
+            );
+            if (!confirmDelete) return;
             await API.delete(`/jobs/${id}`);
 
             toast.success("Job deleted successfully!");

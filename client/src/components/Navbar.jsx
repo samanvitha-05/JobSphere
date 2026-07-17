@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
-
+import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
 const NavigationBar = () => {

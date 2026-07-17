@@ -91,7 +91,7 @@ const JobDetails = () => {
 
                 <h2>{job.title}</h2>
 
-                <h5 className="text-muted">
+                <h5 className="text-primary fw-bold">
                     {job.company}
                 </h5>
 

@@ -108,6 +108,20 @@ const StudentDashboard = () => {
                             {stats.savedJobs}
                         </h2>
 
+                        <div className="progress mt-3">
+
+                            <div
+                                className="progress-bar bg-success"
+                                role="progressbar"
+                                style={{
+                                    width: `${Math.min(stats.savedJobs * 10, 100)}%`
+                                }}
+                            >
+                                {stats.savedJobs}
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -268,29 +282,42 @@ const StudentDashboard = () => {
 
                 <div className="card-body">
 
-                    {latestJobs.map((job) => (
+                    {latestJobs.length === 0 ? (
 
-                        <div
-                            key={job._id}
-                            className="border-bottom pb-3 mb-3"
-                        >
+                        <div className="text-center py-5">
+                            <h3>📭 No Jobs Found</h3>
+                            <p className="text-muted">
+                                There are no jobs available right now.
+                                </p>
+                                </div>
 
-                            <h5>{job.title}</h5>
+                    ) : (
 
-                            <p className="mb-1">
-                                {job.company}
-                            </p>
+                        latestJobs.map((job) => (
 
-                            <Link
-                                to={`/jobs/${job._id}`}
-                                className="btn btn-outline-primary btn-sm"
+                            <div
+                                key={job._id}
+                                className="border-bottom pb-3 mb-3"
                             >
-                                View Job
-                            </Link>
 
-                        </div>
+                                <h5>{job.title}</h5>
 
-                    ))}
+                                <p className="mb-1">
+                                    {job.company}
+                                </p>
+
+                                <Link
+                                    to={`/jobs/${job._id}`}
+                                    className="btn btn-outline-primary btn-sm"
+                                >
+                                    View Job
+                                </Link>
+
+                            </div>
+
+                        ))
+
+                    )}
 
                 </div>
 
@@ -301,5 +328,6 @@ const StudentDashboard = () => {
     );
 
 };
+
 
 export default StudentDashboard;

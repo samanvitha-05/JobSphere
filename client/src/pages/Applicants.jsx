@@ -108,18 +108,29 @@ const Applicants = () => {
                                                 {application.student.phone}
                                             </p>
 
-                                            {application.student.resume && (
-
+                                            {application.student?.resume ? (
                                                 <a
-                                                    href={`http://localhost:5000${application.student.resume}`}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    className="btn btn-outline-primary btn-sm mb-3"
+                                                href={`http://localhost:5000${application.student.resume}`}
+        
+                                                target="_blank"
+        
+                                                rel="noreferrer"
+        
+                                                className="btn btn-outline-primary btn-sm me-2"
                                                 >
+                                                    
                                                     📄 View Resume
-                                                </a>
-
-                                            )}
+                                                    
+                                                    </a>
+                                                ) : (
+                                                
+                                                <span className="badge bg-secondary">
+                                                    
+                                                    Resume Not Uploaded
+                                                    
+                                                    </span>
+                                                
+                                                )}
 
                                             <p>
 
