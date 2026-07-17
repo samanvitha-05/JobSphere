@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
 
 import { AuthContext } from "../context/AuthContext";
 
@@ -10,13 +11,45 @@ const NavigationBar = () => {
 
     const navigate = useNavigate();
 
+    const [notificationCount, setNotificationCount] = useState(0);
+
     const handleLogout = () => {
 
         logout();
-
         navigate("/login");
 
     };
+
+    const fetchNotifications = async () => {
+
+    try {
+
+        const res = await API.get("/notifications");
+
+        const unread = res.data.notifications.filter(
+            (notification) => !notification.read
+        );
+
+        setNotificationCount(unread.length);
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+};
+
+useEffect(() => {
+
+    if (user) {
+
+        fetchNotifications();
+
+    }
+
+}, [user]);
+
 
     return (
 
@@ -51,6 +84,10 @@ const NavigationBar = () => {
                                 <Nav.Link as={Link} to="/my-applications">
                                     My Applications
                                 </Nav.Link>
+
+                                <Nav.Link as={Link} to="/student/dashboard">
+                                    Student Dashboard
+                                </Nav.Link>
                             </>
                         )}
 
@@ -72,15 +109,9 @@ const NavigationBar = () => {
                             </Nav.Link>
                         )}
 
-                        {user?.role === "student" && (
-                            <Nav.Link as={Link} to="/student/dashboard">
-                                Student Dashboard
-                            </Nav.Link>
-                        )}
-
                     </Nav>
 
-                    <Nav>
+                    <Nav className="align-items-center">
 
                         {!user ? (
 
@@ -97,6 +128,21 @@ const NavigationBar = () => {
                         ) : (
 
                             <>
+                                <Nav.Link
+                                as={Link}
+                                to="/notifications"
+                                >
+                                    🔔 Notifications
+                                    {notificationCount > 0 && (
+                                        <span
+                                        className="badge bg-danger ms-2"
+                                        >
+                                            {notificationCount}
+                                            </span>
+                                        )}
+
+                                </Nav.Link>
+
                                 <Nav.Link as={Link} to="/profile">
                                     Profile
                                 </Nav.Link>

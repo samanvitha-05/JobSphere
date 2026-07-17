@@ -13,26 +13,44 @@ const StudentDashboard = () => {
 
     const [stats, setStats] = useState({
         applications: 0,
-        savedJobs: 0
+        savedJobs: 0,
+        jobs: 0
     });
 
+    const [recentApplications, setRecentApplications] = useState([]);
+    const [latestJobs, setLatestJobs] = useState([]);
+
     useEffect(() => {
-        fetchStats();
+        fetchDashboard();
     }, []);
 
-    const fetchStats = async () => {
+    const fetchDashboard = async () => {
 
         try {
 
-            const [applicationsRes, savedJobsRes] = await Promise.all([
+            const [
+                applicationsRes,
+                savedJobsRes,
+                jobsRes
+            ] = await Promise.all([
                 API.get("/applications/my"),
-                API.get("/saved-jobs")
+                API.get("/saved-jobs"),
+                API.get("/jobs")
             ]);
 
             setStats({
                 applications: applicationsRes.data.applications.length,
-                savedJobs: savedJobsRes.data.jobs.length
+                savedJobs: savedJobsRes.data.jobs.length,
+                jobs: jobsRes.data.jobs.length
             });
+
+            setRecentApplications(
+                applicationsRes.data.applications.slice(0, 5)
+            );
+
+            setLatestJobs(
+                jobsRes.data.jobs.slice(0, 5)
+            );
 
         } catch (error) {
 
@@ -46,8 +64,6 @@ const StudentDashboard = () => {
 
         <MainLayout>
 
-            {/* Header */}
-
             <div className="dashboard-header">
 
                 <h2>
@@ -55,7 +71,7 @@ const StudentDashboard = () => {
                 </h2>
 
                 <p className="mb-0">
-                    Manage your applications, saved jobs and profile from one place.
+                    Manage your career journey from one place.
                 </p>
 
             </div>
@@ -105,7 +121,7 @@ const StudentDashboard = () => {
                         <h5>Available Jobs</h5>
 
                         <h2 className="text-warning">
-                            100+
+                            {stats.jobs}
                         </h2>
 
                     </div>
@@ -124,49 +140,157 @@ const StudentDashboard = () => {
 
                 <div className="row">
 
-                    <div className="col-md-3">
+                    <div className="col-md-2 mb-3">
 
                         <Link
                             to="/jobs"
-                            className="btn btn-primary quick-btn"
+                            className="btn btn-primary w-100"
                         >
                             Browse Jobs
                         </Link>
 
                     </div>
 
-                    <div className="col-md-3">
+                    <div className="col-md-2 mb-3">
 
                         <Link
                             to="/my-applications"
-                            className="btn btn-success quick-btn"
+                            className="btn btn-success w-100"
                         >
-                            My Applications
+                            Applications
                         </Link>
 
                     </div>
 
-                    <div className="col-md-3">
+                    <div className="col-md-2 mb-3">
 
                         <Link
                             to="/saved-jobs"
-                            className="btn btn-warning quick-btn"
+                            className="btn btn-warning w-100"
                         >
                             Saved Jobs
                         </Link>
 
                     </div>
 
-                    <div className="col-md-3">
+                    <div className="col-md-2 mb-3">
 
                         <Link
-                            to="/profile"
-                            className="btn btn-dark quick-btn"
+                            to="/notifications"
+                            className="btn btn-info w-100"
                         >
-                            Edit Profile
+                            Notifications
                         </Link>
 
                     </div>
+
+                    <div className="col-md-2 mb-3">
+
+                        <Link
+                            to="/profile"
+                            className="btn btn-dark w-100"
+                        >
+                            Profile
+                        </Link>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {/* Recent Applications */}
+
+            <div className="card shadow mt-5">
+
+                <div className="card-header bg-primary text-white">
+
+                    <h4 className="mb-0">
+                        Recent Applications
+                    </h4>
+
+                </div>
+
+                <div className="card-body">
+
+                    {recentApplications.length === 0 ? (
+
+                        <p>No applications yet.</p>
+
+                    ) : (
+
+                        recentApplications.map((application) => (
+
+                            <div
+                                key={application._id}
+                                className="border-bottom pb-3 mb-3"
+                            >
+
+                                <h5>{application.job.title}</h5>
+
+                                <p className="mb-1">
+                                    {application.job.company}
+                                </p>
+
+                                <span
+                                    className={
+                                        application.status === "Accepted"
+                                            ? "badge bg-success"
+                                            : application.status === "Rejected"
+                                            ? "badge bg-danger"
+                                            : "badge bg-warning text-dark"
+                                    }
+                                >
+                                    {application.status}
+                                </span>
+
+                            </div>
+
+                        ))
+
+                    )}
+
+                </div>
+
+            </div>
+
+            {/* Latest Jobs */}
+
+            <div className="card shadow mt-5 mb-5">
+
+                <div className="card-header bg-success text-white">
+
+                    <h4 className="mb-0">
+                        Latest Jobs
+                    </h4>
+
+                </div>
+
+                <div className="card-body">
+
+                    {latestJobs.map((job) => (
+
+                        <div
+                            key={job._id}
+                            className="border-bottom pb-3 mb-3"
+                        >
+
+                            <h5>{job.title}</h5>
+
+                            <p className="mb-1">
+                                {job.company}
+                            </p>
+
+                            <Link
+                                to={`/jobs/${job._id}`}
+                                className="btn btn-outline-primary btn-sm"
+                            >
+                                View Job
+                            </Link>
+
+                        </div>
+
+                    ))}
 
                 </div>
 

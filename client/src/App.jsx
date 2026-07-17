@@ -16,6 +16,7 @@ import Applicants from "./pages/Applicants";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PostJob from "./pages/PostJob";
 import EditJob from "./pages/EditJob";
+import Notifications from "./pages/Notifications";
 
 function App() {
 
@@ -136,6 +137,15 @@ function App() {
                 element={
                 <ProtectedRoute role="recruiter">
                     <EditJob />
+                    </ProtectedRoute>
+                }
+                />
+
+                <Route
+                path="/notifications"
+                element={
+                <ProtectedRoute>
+                    <Notifications />
                     </ProtectedRoute>
                 }
                 />

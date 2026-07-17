@@ -142,6 +142,13 @@ const updateApplicationStatus = async (req, res) => {
 
         await application.save();
 
+        const Notification = require("../models/Notification");
+        await Notification.create({
+            user: application.student,
+            title: "Application Status Updated",
+            message: `Your application has been ${status}.`
+        });
+
         console.log("After save");
 
         res.status(200).json({

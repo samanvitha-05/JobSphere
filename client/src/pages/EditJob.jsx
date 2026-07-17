@@ -65,7 +65,7 @@ const EditJob = () => {
                     .map(skill => skill.trim())
             });
 
-            alert("Job Updated Successfully");
+            toast.success("Job Updated Successfully");
 
             navigate("/my-posted-jobs");
 

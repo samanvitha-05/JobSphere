@@ -3,41 +3,49 @@ const Application = require("../models/Application");
 const SavedJob = require("../models/SavedJob");
 
 const getDashboardStats = async (req, res) => {
+
     try {
 
         const totalJobs = await Job.countDocuments();
 
-        const myJobs = await Job.countDocuments({
-            recruiter: req.user.id
-        });
+        const totalStudents = await Application.db
+            .model("User")
+            .countDocuments({ role: "student" });
 
-        const myApplications = await Application.countDocuments({
-            student: req.user.id
-        });
+        const totalRecruiters = await Application.db
+            .model("User")
+            .countDocuments({ role: "recruiter" });
 
-        const savedJobs = await SavedJob.countDocuments({
-            student: req.user.id
-        });
+        const totalApplications = await Application.countDocuments();
 
         res.status(200).json({
+
             success: true,
+
             stats: {
+
                 totalJobs,
-                myJobs,
-                myApplications,
-                savedJobs
+                totalStudents,
+                totalRecruiters,
+                totalApplications
+
             }
+
         });
 
     } catch (error) {
 
         res.status(500).json({
+
             success: false,
             message: error.message
+
         });
 
     }
+
 };
+
 const recruiterDashboard = async (req, res) => {
     try {
 

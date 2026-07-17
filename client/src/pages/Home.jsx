@@ -1,9 +1,47 @@
-import MainLayout from "../layouts/MainLayout";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+import MainLayout from "../layouts/MainLayout";
+import API from "../services/api";
+
 import hero from "../assets/hero.png";
 import "./Home.css";
 
 const Home = () => {
+
+    const [featuredJobs, setFeaturedJobs] = useState([]);
+
+    const [stats, setStats] = useState({
+        totalJobs: 0,
+        students: 500,
+        recruiters: 100
+    });
+
+    useEffect(() => {
+        fetchHomeData();
+    }, []);
+
+    const fetchHomeData = async () => {
+
+        try {
+
+            const res = await API.get("/jobs");
+
+            setFeaturedJobs(res.data.jobs.slice(0, 6));
+
+            setStats({
+                totalJobs: res.data.jobs.length,
+                students: 500,
+                recruiters: 100
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    };
 
     return (
 
@@ -23,7 +61,7 @@ const Home = () => {
 
                         <p className="hero-subtitle">
                             JobSphere helps students connect with top companies,
-                            discover exciting opportunities, and build successful careers.
+                            discover exciting opportunities and build successful careers.
                         </p>
 
                         <Link
@@ -46,7 +84,7 @@ const Home = () => {
 
                         <img
                             src={hero}
-                            alt="Job Portal"
+                            alt="Hero"
                             className="hero-image img-fluid"
                         />
 
@@ -62,7 +100,9 @@ const Home = () => {
 
                 <div className="text-center mb-5">
 
-                    <h2>Why Choose JobSphere?</h2>
+                    <h2>
+                        Why Choose JobSphere?
+                    </h2>
 
                     <p className="text-muted">
                         Everything you need to launch your career.
@@ -83,8 +123,7 @@ const Home = () => {
                                 <h4>Thousands of Jobs</h4>
 
                                 <p>
-                                    Explore job opportunities from leading companies
-                                    across India.
+                                    Explore opportunities from leading companies across India.
                                 </p>
 
                             </div>
@@ -104,8 +143,7 @@ const Home = () => {
                                 <h4>Easy Apply</h4>
 
                                 <p>
-                                    Apply for jobs in just one click using your
-                                    JobSphere profile.
+                                    Apply for jobs in just one click using your JobSphere profile.
                                 </p>
 
                             </div>
@@ -125,8 +163,7 @@ const Home = () => {
                                 <h4>Career Growth</h4>
 
                                 <p>
-                                    Connect with recruiters and grow your career
-                                    with confidence.
+                                    Connect with recruiters and grow your career confidently.
                                 </p>
 
                             </div>
@@ -143,6 +180,14 @@ const Home = () => {
 
             <section className="container py-5">
 
+                <div className="text-center mb-5">
+
+                    <h2>
+                        Platform Statistics
+                    </h2>
+
+                </div>
+
                 <div className="row text-center">
 
                     <div className="col-md-4 mb-4">
@@ -150,11 +195,11 @@ const Home = () => {
                         <div className="card stats-card shadow p-4">
 
                             <h2 className="text-primary fw-bold">
-                                1000+
+                                {stats.totalJobs}
                             </h2>
 
                             <p className="mb-0">
-                                Jobs Posted
+                                Total Jobs
                             </p>
 
                         </div>
@@ -166,11 +211,11 @@ const Home = () => {
                         <div className="card stats-card shadow p-4">
 
                             <h2 className="text-success fw-bold">
-                                500+
+                                {stats.recruiters}+
                             </h2>
 
                             <p className="mb-0">
-                                Companies
+                                Recruiters
                             </p>
 
                         </div>
@@ -182,7 +227,7 @@ const Home = () => {
                         <div className="card stats-card shadow p-4">
 
                             <h2 className="text-danger fw-bold">
-                                5000+
+                                {stats.students}+
                             </h2>
 
                             <p className="mb-0">
@@ -192,6 +237,87 @@ const Home = () => {
                         </div>
 
                     </div>
+
+                </div>
+
+            </section>
+
+            {/* Featured Jobs */}
+
+            <section className="container py-5">
+
+                <div className="text-center mb-5">
+
+                    <h2>
+                        Featured Jobs
+                    </h2>
+
+                    <p className="text-muted">
+                        Explore the latest opportunities.
+                    </p>
+
+                </div>
+
+                <div className="row">
+
+                    {featuredJobs.map((job) => (
+
+                        <div
+                            className="col-md-4 mb-4"
+                            key={job._id}
+                        >
+
+                            <div className="card shadow h-100">
+
+                                <div className="card-body">
+
+                                    <h4>{job.title}</h4>
+
+                                    <h6>{job.company}</h6>
+
+                                    <p>📍 {job.location}</p>
+
+                                    <p>💰 ₹ {job.salary}</p>
+
+                                    <Link
+                                        to={`/jobs/${job._id}`}
+                                        className="btn btn-primary"
+                                    >
+                                        View Job
+                                    </Link>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    ))}
+
+                </div>
+
+            </section>
+
+            {/* Call To Action */}
+
+            <section className="bg-dark text-white py-5 mt-5">
+
+                <div className="container text-center">
+
+                    <h2>
+                        Ready to Start Your Career?
+                    </h2>
+
+                    <p className="mb-4">
+                        Join thousands of students and recruiters using JobSphere.
+                    </p>
+
+                    <Link
+                        to="/register"
+                        className="btn btn-warning btn-lg"
+                    >
+                        Create Account
+                    </Link>
 
                 </div>
 
